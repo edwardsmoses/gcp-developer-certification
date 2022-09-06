@@ -1,0 +1,11 @@
+com/google/training/appdev/services/gcp/domain/Feedback.class
+com/google/training/appdev/services/gcp/domain/QuizResult.class
+com/google/training/appdev/api/QuizEndpoint.class
+com/google/training/appdev/api/QuestionManagementEndpoint.class
+com/google/training/appdev/services/gcp/datastore/QuestionService.class
+com/google/training/appdev/services/gcp/domain/Question$1.class
+com/google/training/appdev/services/gcp/domain/Question$Builder.class
+com/google/training/appdev/web/QuestionsController.class
+com/google/training/appdev/services/gcp/domain/Question.class
+com/google/training/appdev/QuizApplication.class
+com/google/training/appdev/services/gcp/domain/Answer.class
