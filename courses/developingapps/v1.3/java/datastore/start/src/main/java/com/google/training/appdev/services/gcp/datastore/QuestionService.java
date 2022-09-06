@@ -43,39 +43,27 @@ private final KeyFactory keyFactory = datastore().newKeyFactory().setKind(ENTITY
 // is passed a Question object using data from the form
 // Extract the form data and add it to Datastore
 
-// TODO: Modify return type to Key
+    public Key createQuestion(Question question)
 
-    public String createQuestion(Question question) {
+    //init the key object
+    Key key = datastore.allocateId(keyFactory.newKey());
 
-// END TODO
-
-// TODO: Declare the entity key, 
-// with a Datastore allocated id
-
-
-// END TODO
- 
-// TODO: Declare the entity object, with the key and data
-// The entity's members are set using the Entity.Builder. 
-// This has a set method for property names and values
-// Values are retrieved from the Domain object
-
-
+    Entity questionEntity = Entity.newBuilder(key)
+      .set(Question.QUIZ, question.getQuiz())
+      .set(Question.AUTHOR, question.getAuthor())
+      .set(Question.TITLE, question.getTitle())
+      .set(Question.ANSWER_ONE,question.getAnswerOne())
+      .set(Question.ANSWER_TWO, question.getAnswerTwo())
+      .set(Question.ANSWER_THREE,question.getAnswerThree())
+      .set(Question.ANSWER_FOUR, question.getAnswerFour())
+      .set(Question.CORRECT_ANSWER,
+                              question.getCorrectAnswer())
+      .build();
 
 
+      datastore.put(questionEntity);
+      return key;
 
-
-// END TODO
-
-// TODO: Save the entity
-
-// END TODO
-
-// TODO: Return the key
-
-        return "Replace this string with the key";
-
-// END TODO
     }
 
     public List<Question> getAllQuestions(String quiz){
