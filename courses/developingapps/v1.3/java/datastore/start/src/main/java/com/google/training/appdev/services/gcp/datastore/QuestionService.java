@@ -36,14 +36,14 @@ private static final String ENTITY_KIND = "Question";
 
 
 // Create a KeyFactory for Question entities
-private final KeyFactory keyFactory = datastore().newKeyFactory().setKind(ENTITY_KIND);
+private final KeyFactory keyFactory = datastore.newKeyFactory().setKind(ENTITY_KIND);
 
 
 // The createQuestion(Question question) method 
 // is passed a Question object using data from the form
 // Extract the form data and add it to Datastore
 
-    public Key createQuestion(Question question)
+    public Key createQuestion(Question question){
 
     //init the key object
     Key key = datastore.allocateId(keyFactory.newKey());
