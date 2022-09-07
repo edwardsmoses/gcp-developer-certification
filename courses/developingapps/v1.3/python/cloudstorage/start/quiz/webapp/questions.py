@@ -11,7 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO: Import the storage module
+# Import the storage module
+from quiz.gcp import storage, datastore
 
 from quiz.gcp import datastore
 
@@ -26,19 +27,13 @@ def upload_file(image_file, public):
     if not image_file:
         return None
 
-    # TODO: Use the storage client to Upload the file
-    # The second argument is a boolean
+    # Use the storage client to Upload the file
+    public_url = storage.upload_file(
+       image_file,
+       public
+    )
 
-    
-
-    # END TODO
-
-    # TODO: Return the public URL
-    # for the object
-
-    return u''
-
-    # END TODO
+    return public_url
 
 """
 uploads file into google cloud storage
@@ -47,14 +42,15 @@ uploads file into google cloud storage
 """
 def save_question(data, image_file):
 
-    # TODO: If there is an image file, then upload it
+    # If there is an image file, then upload it
     # And assign the result to a new Datastore property imageUrl
     # If there isn't, assign an empty string
     
-    
-    
-
-    # END TODO
+    if image_file:
+        data['imageUrl'] = str(
+                  upload_file(image_file, True))
+    else:
+        data['imageUrl'] = u''
 
     data['correctAnswer'] = int(data['correctAnswer'])
     datastore.save_question(data)
