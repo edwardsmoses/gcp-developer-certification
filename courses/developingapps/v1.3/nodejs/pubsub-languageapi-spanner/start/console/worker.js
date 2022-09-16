@@ -13,6 +13,7 @@
 
 const subscriber = require("../server/gcp/pubsub");
 const languageAPI = require("../server/gcp/languageapi");
+const spanner = require("../server/gcp/spanner.js");
 
 // TODO: Load the ../server/gcp/spanner module
 
@@ -37,22 +38,14 @@ function handler(message) {
         console.log("Sentiment Score:", score);
         messageData.score = score;
         return messageData;
+    }).then((feedback) => {
+        spanner.saveFeedback(feedback).then(() => {
+            console.log("Feedback saved!!");
+        }).catch((error) => {
+            console.error(error);
+        })
     })
 
-    // TODO: Invoke the languageapi module method
-    // with the feedback from the student
-
-
-      // TODO: Log sentiment score
-
-
-      // END TODO
-
-      // TODO: Add a score property to feedback object
-      // and return updated feedback object
-
-
-      //END TODO
 
 
     // END TODO
@@ -66,9 +59,9 @@ function handler(message) {
 
     // TODO: Add third .then(...)
 
-        // TODO Log feedback saved message
+    // TODO Log feedback saved message
 
-        // END TODO
+    // END TODO
 
 
     // END TODO
