@@ -11,53 +11,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 const config = require('../config');
-
-// TODO: Load the Cloud Pub/Sub module
-
+const {PubSub} = require('@google-cloud/pubsub');
 
 
-// END TODO
+//create a client object for Cloud PubSUb
+const pubSub = new PubSub({
+    projectId: config.get('GCLOUD_PROJECT')
+});
 
-// TODO: Create a client object against Cloud Pub/Sub
-// The Pubsub(...) factory function accepts an options 
-// object which is used to specify which project's Cloud 
-// Pub/Sub topics should be used via the projectId 
-// property. 
-// The projectId is retrieved from the config module. 
-// This module retrieves the project ID from the 
-// GCLOUD_PROJECT environment variable.
-
-
-
-
-// END TODO
-
-// TODO: Get a reference to the feedback topic
-// This code assumes that the topic is already present in 
-// the project. 
-// If it isn't then you would need to handle that case by 
-// using the pubsub object's createTopic(...) method
-
-
-
-// END TODO
+//get a reference to the topic 'feedback'
+const feedbackTopic = pubSub.topic('feedback');
 
 
 function publishFeedback(feedback) {
-  // TODO: Publish a message to the feedback topic
-  // This runs asynchronously so you need to return the 
-  // Promise that results from executing topic.publish(...)
-  // The feedback object must be converted to a buffer
-  // In addition, it's a good idea to use a consistent 
-  // property for the message body. This lab will use the 
-  // name dataBuffer for the message data
-
-
-
-
-
-  // END TODO
-
+  
+    const dataBuffer  = Buffer.from(JSON.stringify(feedback));
+    return feedbackTopic.publish(dataBuffer);
 }
 
 // The worker application will pass a callback to this 
