@@ -13,55 +13,26 @@
 
 // Import the config module
 const config = require('../config');
+const Language = require('@google-cloud/language')
 
-// TODO: Load the Natural Language ML API module
+//the languageService client
+const language = new Language.LanguageServiceClient({
+    projectId: config.get('GCLOUD_PROJECT')
+})
 
-
-
-
-// END TODO
-
-// TODO: Create a client object against the Language API
-// using the Language.LanguageServiceClient function
-// The LanguageServiceClient function accepts an options 
-// object which is used to specify which project should be 
-// billed for use of the API via the projectId property. 
-// The projectId is retrieved from the config module. 
-// This module retrieves the project ID from the 
-// GCLOUD_PROJECT environment variable.
-
-
-
-
-
-// END TODO
 
 
 function analyze(text) {
-    // TODO: Create an object named document with the 
-    // correct structure for the Natural Language ML API
+   
+    const document = {
+        content: text, 
+        type: "PLAIN_TEXT",
+    }
 
-
-    // TODO: Initialize object content and type props
-    // TODO: Set content from text arg
-    // TODO: Set type to PLAIN_TEXT
-
-
-    // END TODO
-
-    // TODO: Perform sentiment detection
-
-    // TODO: Chain then
-    // When the results come back
-    // The sentiment data is the first element
-
-
-    // TODO: Get the sentiment score (-1 to +1)
-
-
-
-    // END TODO
-
+    return language.analyzeSentiment({document}).then((results) => {
+        const [sentiment] = results;
+        return sentiment.documentSentiment.score;
+    })
 }
 
 module.exports = {

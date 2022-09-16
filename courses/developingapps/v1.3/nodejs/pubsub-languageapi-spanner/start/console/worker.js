@@ -11,17 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const subscriber = require("../server/gcp/pubsub")
-
-
-// END TODO
-
-// TODO: Load the ../server/gcp/languageapi module
-
-
-
-
-// END TODO
+const subscriber = require("../server/gcp/pubsub");
+const languageAPI = require("../server/gcp/languageapi");
 
 // TODO: Load the ../server/gcp/spanner module
 
@@ -41,6 +32,12 @@ function handler(message) {
 
     const messageData = JSON.parse(message.toString());
     console.log(messageData);
+
+    languageAPI.analyze(messageData.feedback).then((score) => {
+        console.log("Sentiment Score:", score);
+        messageData.score = score;
+        return messageData;
+    })
 
     // TODO: Invoke the languageapi module method
     // with the feedback from the student
