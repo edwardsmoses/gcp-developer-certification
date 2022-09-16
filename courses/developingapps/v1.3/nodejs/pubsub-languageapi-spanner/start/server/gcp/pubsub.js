@@ -24,7 +24,6 @@ const feedbackTopic = pubSub.topic('feedback');
 
 
 function publishFeedback(feedback) {
-
     const dataBuffer = Buffer.from(JSON.stringify(feedback));
     return feedbackTopic.publish(dataBuffer);
 }
@@ -44,6 +43,11 @@ function registerFeedbackNotification(cb) {
         }
 
         feedbackSubscription.get().then(([subscription]) => {
+            
+            subscription.on('message', message => {
+                cb(message.data);
+            });
+
             subscription.on('error', err => {
                 console.error(err);
             });

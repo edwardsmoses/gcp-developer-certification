@@ -11,8 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO: Load the ../server/gcp/pubsub module
-
+const subscriber = require("../server/gcp/pubsub")
 
 
 // END TODO
@@ -40,10 +39,8 @@ function handler(message) {
     console.log('Message received');
 
 
-    // TODO: Log the message to the console
-
-
-    // END TODO
+    const messageData = JSON.parse(message.toString());
+    console.log(messageData);
 
     // TODO: Invoke the languageapi module method
     // with the feedback from the student
@@ -86,8 +83,5 @@ function handler(message) {
 
 }
 
-// TODO: Register the callback with the module
-
-
-
-// END TODO
+//register the handler as a pubsub subcription to subscribe to the Feedback topic.. 
+subscriber.registerFeedbackNotification(handler);
