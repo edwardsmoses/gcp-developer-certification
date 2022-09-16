@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 const config = require('../config');
-const {PubSub} = require('@google-cloud/pubsub');
+const { PubSub } = require('@google-cloud/pubsub');
 
 
 //create a client object for Cloud PubSUb
@@ -24,8 +24,8 @@ const feedbackTopic = pubSub.topic('feedback');
 
 
 function publishFeedback(feedback) {
-  
-    const dataBuffer  = Buffer.from(JSON.stringify(feedback));
+
+    const dataBuffer = Buffer.from(JSON.stringify(feedback));
     return feedbackTopic.publish(dataBuffer);
 }
 
@@ -33,13 +33,12 @@ function publishFeedback(feedback) {
 // method as the cb argument so it is notified when a
 // feedback PubSub message is received
 function registerFeedbackNotification(cb) {
-  
+
     feedbackTopic.createSubscription('worker-subscription', {
         autoAck: true,
     }, (err, feedbackSubscription) => {
 
-        
-        if(err && err.code == 6){
+        if (err && err.code == 6) {
             console.log('Feedback subscription already exists');
             feedbackSubscription = feedbackTopic.subscription("worker-subscription")
         }
@@ -51,61 +50,12 @@ function registerFeedbackNotification(cb) {
         }).catch((error) => {
             console.log("Error getting feedback subscription", error);
         })
-
-    })
-
-
-
-    // TODO: Trap errors where the subscription already exists 
-    // Create a subscription object for worker-subscription if
-    // the subscrioption already exists
-    // err.code == 6 means subscription already exists 
-
-    // END TODO
-
-    // TODO: Use the get() method on the subscription object to call 
-    // the API request to return a promise
-
-
-      // The results argument in the promise is an array - the 
-      // first element in this array is the subscription object.
-
-      // TODO: Declare a subscription constant
-
-
-      // END TODO
-
-      // TODO: Register an event handler for message events
-      // Use an arrow function to handle the event
-      // When a message arrives, invoke a callback
-
-
-      // END TODO
-
-
-      // TODO: Register an event handler for error events
-      // Print the error to the console
-
-
-      // END TODO
-
-
-    // END TODO for the get() method promise 
-
-    // TODO
-    // Add a final catch to the promise to handle errors
-
-
-    // END TODO
-
-
-  // END TODO for the create subscription method
-
+    });
 }
 
 // [START exports]
 module.exports = {
-  publishFeedback,
-  registerFeedbackNotification
+    publishFeedback,
+    registerFeedbackNotification
 };
 // [END exports]
