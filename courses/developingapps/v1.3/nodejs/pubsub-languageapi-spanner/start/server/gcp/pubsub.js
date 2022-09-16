@@ -33,8 +33,27 @@ function publishFeedback(feedback) {
 // method as the cb argument so it is notified when a
 // feedback PubSub message is received
 function registerFeedbackNotification(cb) {
-  // TODO: Create a subscription called worker-subscription
-  // TODO: Have it auto-acknowledge messages 
+  
+    feedbackTopic.createSubscription('worker-subscription', {
+        autoAck: true,
+    }, (err, feedbackSubscription) => {
+
+        
+        if(err && err.code == 6){
+            console.log('Feedback subscription already exists');
+            feedbackSubscription = feedbackTopic.subscription("worker-subscription")
+        }
+
+        feedbackSubscription.get().then(([subscription]) => {
+            subscription.on('error', err => {
+                console.error(err);
+            });
+        }).catch((error) => {
+            console.log("Error getting feedback subscription", error);
+        })
+
+    })
+
 
 
     // TODO: Trap errors where the subscription already exists 
