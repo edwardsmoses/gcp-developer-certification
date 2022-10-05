@@ -11,3 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+FROM gcr.io/google_appengine/nodejs
+RUN /usr/local/bin/install_node '>=0.12.7'
+COPY . /app/
+RUN npm install -g npm@8.1.3 --unsafe-perm || \
+  ((if [ -f npm-debug.log ]; then \
+      cat npm-debug.log; \
+    fi) && false)
+RUN npm update
+CMD npm start
+
+
+
