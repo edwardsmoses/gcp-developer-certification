@@ -31,12 +31,12 @@ spec:
     spec:
       containers:
       - name: quiz-backend
-        image: [BACKEND_IMAGE_IDENTIFIER]
+        image: gcr.io/qwiklabs-gcp-04-4c2c8e69664d/quiz-backend
         imagePullPolicy: Always
         env:
           - name: GCLOUD_PROJECT
-            value: [GCLOUD_PROJECT]
+            value: qwiklabs-gcp-04-4c2c8e69664d
           - name: GCLOUD_BUCKET
-            value: [GCLOUD_BUCKET]
+            value: qwiklabs-gcp-04-4c2c8e69664d-media
           - name: NODE_ENV
             value: production

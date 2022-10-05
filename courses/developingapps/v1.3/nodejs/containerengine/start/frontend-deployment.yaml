@@ -31,15 +31,15 @@ spec:
     spec:
       containers:
       - name: quiz-frontend
-        image: [FRONTEND_IMAGE_IDENTIFIER]
+        image: gcr.io/qwiklabs-gcp-04-4c2c8e69664d/quiz-frontend
         imagePullPolicy: Always
         ports:
         - name: http-server
           containerPort: 8080
         env:
           - name: GCLOUD_PROJECT
-            value: [GCLOUD_PROJECT]
+            value: qwiklabs-gcp-04-4c2c8e69664d
           - name: GCLOUD_BUCKET
-            value: [GCLOUD_BUCKET]
+            value: qwiklabs-gcp-04-4c2c8e69664d-media
           - name: NODE_ENV
             value: production
