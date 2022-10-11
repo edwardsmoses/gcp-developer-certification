@@ -18,17 +18,13 @@
 // can use to configure the Stackdriver Debugger agent.
 // You will need to pass through an object with an 
 // allowExpressions Boolean property set to true.
+require("@google-cloud/debug-agent").start({
+    allowExpressions: true,
+})
 
 
-
-
-// END TODO
-// TODO: Load the error-reporting module
-
-
-
-
-// END TODO
+const {ErrorReporting} = require(
+    '@google-cloud/error-reporting');
 
 
 
@@ -38,12 +34,8 @@ const config = require('./config');
 
 const app = express();
 
-// TODO: Create the errorReporting client object
-
-
-
-
-// END TODO
+// Create the errorReporting client object
+const errorReporting = new ErrorReporting();
 
 
 // Static files
@@ -68,7 +60,7 @@ app.get('/', (req, res) => {
 
 // TODO: Use Stackdriver Error Reporting 
 // middleware for Express
-
+app.use(errorReporting.express);
 
 
 
